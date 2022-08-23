@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
+const FavoriteColor = () => {
+    const[color, setColor] = useState("red");
 
+    return <h1>My favorite color is {color}!</h1>
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    
+    <FavoriteColor />
 )
 
 
@@ -40,12 +44,16 @@ root.render(
 
 
 
+
+/*      ***** useState HOOK *****        */
+
 /*
-    ***** useState *****
+    
 
     Burada uygulama state'ini(durumunu) takip etmek için, useState Hook'unu kullanıyoruz.
 
     State genellikle, izlenmesi gereken uygulama verilerini veya özelliklerini ifade eder.
+
 
     ************ useState UYGULAMA 1 ************
 
@@ -70,6 +78,35 @@ root.render(
     root.render(
         <FavoriteColor />
     )
+
+*/
+
+
+
+/*
+    React useState Hook bir Function Componentdaki state'i(durumu) izlememizi sağlar.
+
+    State(Durum) genellikle bir uygulamada izlenmesi gereken verileri(data) veya özellikleri(properties) ifade eder.
+
+    import { useState } from "react"; şeklinde import edilir.
+
+    *** Initialize useState ***
+    useState Function Componentimizi çağırarak state'imizi başlatıyoruz.
+    useState bir başlangıç state'ini kabul eder ve iki değer döndürür:
+
+    1-) Şu anki state(durum)
+    2-) Durumu update eden(güncelleyen) bir function.
+
+    const FavoriteColor = () => {
+        const [color, setColor] = useState("");
+    }
+
+    Burada, ilk değer olan color, mevcut durumumuzdur.
+    İkinci değer olan setColor, state'imizi(durumumuzu) güncellemek için kullanılan fonksiyondur.
+
+    Not: Bu isimler, istediğimiz herhangi bir şey olarak adlandırılabilen değişkenlerdir.
+
+    Son olarak, ilk durumu boş bir stringe ayarladık: useState("")
 
 */
 
