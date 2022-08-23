@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
-const FavoriteColor = () => {
-    const[color, setColor] = useState("red"); 
+const Car = () => {
+    const [brand, setBrand] = useState("Ford");
+    const [model, setModel] = useState("Mustang");
+    const [year, setYear] = useState("1964");
+    const [color, setColor] = useState("red");
 
-    return <h1>My favorite color is {color}!</h1>
+    return (
+        <>
+            <h1>My {brand} </h1>
+            <p>
+                It is a {color} {model} from {year}.
+            </p>
+        </>
+    )
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <FavoriteColor />
+    <Car />
 )
 
 
@@ -110,5 +120,88 @@ root.render(
 
 */
 
+
+
+/*
+    ************ useState UYGULAMA 2 ************
+
+    import { useState } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const FavoriteColor = () => {
+        const[color, setColor] = useState("red"); 
+
+        return <h1>My favorite color is {color}!</h1>
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <FavoriteColor />
+    )
+
+
+    // Not: State'i asla doğrudan güncellememeliyiz. Örn: color = "red" izin verilmez.
+    // Not: State'imizi güncellemek için state güncelleyici fonksiyonumuzu kullanıyoruz.
+
+    // useState Hooku; stringleri, sayıları, booleanları, dizileri, nesneleri ve bunların herhangi bir kombinasyonunu takip etmek için kullanılabilir!
+
+*/
+
+
+
+/*
+    ************ useState UYGULAMA 3 ************
+
+    import { useState } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const FavoriteColor = () => {
+        const[color, setColor] = useState("red"); 
+
+        return (
+            <>
+                <h1>My favorite color is {color}!</h1>
+                <button type='button' onClick={() => setColor("blue")}>Blue</button>
+            </>
+        )
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <FavoriteColor />
+    )
+
+*/
+
+
+
+/*
+    ************ useState UYGULAMA 4 ************
+
+    import { useState } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const Car = () => {
+        const [brand, setBrand] = useState("Ford");
+        const [model, setModel] = useState("Mustang");
+        const [year, setYear] = useState("1964");
+        const [color, setColor] = useState("red");
+
+        return (
+            <>
+                <h1>My {brand} </h1>
+                <p>
+                    It is a {color} {model} from {year}.
+                </p>
+            </>
+        )
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <Car />
+    )
+
+*/
 
 
