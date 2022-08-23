@@ -9,7 +9,13 @@ const Car = () => {
         color: "red"
     });
 
-    
+    const updateColor = () => {
+        setCar( (yeniState) => {
+            return {...yeniState, year: 2000, brand: "Mercedes"}
+        })
+    };
+
+
 
     return (
         <>
@@ -17,6 +23,7 @@ const Car = () => {
             <p>
                 It is a {car.color} {car.model} from {car.year}.
             </p>
+            <button type='button' onClick={updateColor}>Degistir</button>
         </>
     )
     
@@ -243,4 +250,46 @@ root.render(
 
 */
 
+
+
+/*
+    ************ useState UYGULAMA 6 ************
+
+    import { useState } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const Car = () => {
+        const [car, setCar] = useState({
+            brand: "Ford",
+            model: "Mustang",
+            year: 1964,
+            color: "red"
+        });
+
+        const updateColor = () => {
+            setCar( (yeniState) => {
+                return {...yeniState, year: 2000, brand: "Mercedes"}
+            })
+        };
+
+        // Halihazırdaki state(durum) değerine ihtiyacımız olduğu için, fonksiyonumuza bir fonksiyon geçiriyoruz (setCar ın içinde olan fonksiyon). Bu fonksiyon önceki değeri/değerleri alır.
+
+        return (
+            <>
+                <h1>My {car.brand} </h1>
+                <p>
+                    It is a {car.color} {car.model} from {car.year}.
+                </p>
+                <button type='button' onClick={updateColor}>Degistir</button>
+            </>
+        )
+        
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <Car />
+    )
+
+*/
 
