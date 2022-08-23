@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
 const FavoriteColor = () => {
-    const[color, setColor] = useState("red");
+    const[color, setColor] = useState("red"); 
 
     return <h1>My favorite color is {color}!</h1>
 }
