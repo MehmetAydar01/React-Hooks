@@ -1,37 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
-const Car = () => {
-    const [car, setCar] = useState({
-        brand: "Ford",
-        model: "Mustang",
-        year: 1964,
-        color: "red"
-    });
+const CleanEffect = () => {
+    const [count, setCount] = useState(0);
 
-    const updateColor = () => {
-        setCar( (yeniState) => {
-            return {...yeniState, year: 2000, brand: "Mercedes"}
-        })
-    };
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            setCount((count) => count + 1)
+        }, 1000);
 
+        return () => clearTimeout(timer);
 
+    }, []);
 
-    return (
-        <>
-            <h1>My {car.brand} </h1>
-            <p>
-                It is a {car.color} {car.model} from {car.year}.
-            </p>
-            <button type='button' onClick={updateColor}>Degistir</button>
-        </>
-    )
-    
-}
+    return <h1> İşlemimiz Çalışıyor {count} </h1>
+};
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <Car />
+    <CleanEffect />
 )
 
 
@@ -67,10 +55,9 @@ root.render(
 
 
 
-/*      ***** useState HOOK *****        */
+/*      ***** React useState Hook *****        */
 
 /*
-    
 
     Burada uygulama state'ini(durumunu) takip etmek için, useState Hook'unu kullanıyoruz.
 
@@ -293,3 +280,173 @@ root.render(
 
 */
 
+
+
+
+
+/*      ***** React useEffect Hooks *****        */
+
+/*
+    --> useEffect Hook'u componentlarımızda side effects(yan etkiler) gerçekleştirmemize olanak tanır.
+
+    --> Bazı side effects(yan etki) örnekleri şunlardır: Veri alma/işleme(Fetching data), doğrudan DOM'i güncelleme ve zamanlayıcılar(timers).
+
+    --> useEffect 2 arguman kabul eder. İkinci arguman opsiyonel, yani isteğe bağlıdır.
+
+    --> useEffect(<function>, <dependency>)
+*/
+
+/*
+    ************ useEffect UYGULAMA 1 ************
+
+    import { useState, useEffect } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const Timer = () => {
+        const [count, setCount] = useState(0);
+
+        useEffect(() => {
+            setTimeout(() => {
+                setCount((count) => count + 1)
+            }, 1000);
+        });
+
+        return <h1>I've rendered {count} times!</h1>
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <Timer />
+    )
+
+    --> Burada!! Sadece bir kez sayması gerektiği halde saymaya devam ediyor!
+
+    --> useEffect her render üzerinde çalışır. Bu, sayı değiştiğinde, daha sonra başka bir efekti tetikleyen bir oluşturma gerçekleştiği anlamına gelir.
+
+    --> İstediğimiz bu değil. Yan etkilerin(side effects) ne zaman çalıştığını kontrol etmenin birkaç yolu vardır.
+
+    --> Her zaman bir diziyi(Array'i) kabul eden ikinci parametreyi dahil etmeliyiz. Bu dizide isteğe bağlı olarak useEffect'e bağımlılıkları aktarabiliriz.
+*/
+
+
+
+/*
+    1-) No dependency passed: // Bağımlılık geçmedi:
+    useEffect(() => {
+        // Runs on every render --> Her render(işleme) edildiğinde çalışır
+    });
+
+    2-) An empty array: // Boş bir dizi
+    useEffect(() => {
+        // Runs only on the first render --> Yalnızca ilk renderda(işlemede) çalışır.
+    }, []);
+
+    3-) Props or state values: // Props veya durum değerleri
+    useEffect(() => {
+        // Runs on the first render -->  
+        // And any time any dependency value changes
+        // Bu yapıda: Hem ilk renderda hem de herhangi bir bağımlılık(dependency) değeri değiştiğinde çalışır.
+    }, [prop, state]);
+*/
+
+
+
+/*
+    ************ useEffect UYGULAMA 2 ************
+
+    import { useState, useEffect } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const Timer = () => {
+        const [count, setCount] = useState(0);
+
+        useEffect(() => {
+            setTimeout(() => {
+                setCount((count) => count + 1)
+            }, 1000);
+        }, []); // Efekti yalnızca ilk oluşturmada render ettik.
+
+        return <h1>I've rendered {count} times!</h1>
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <Timer />
+    )
+*/
+
+
+
+/*
+    ************ useEffect UYGULAMA 3 ************
+
+    --> İşte bir değişkene bağlı olan useEffect Hook örneği. Count değişkeni güncellenirse efekt tekrar çalışır:
+
+    import { useState, useEffect } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+    const Counter = () => {
+        const [count, setCount] = useState(0);
+        const [calculation, setCalculation] = useState(0);
+
+        useEffect(() => {
+            setCalculation(() => count * 2)
+        }, [count]);
+
+        return (
+            <>
+                <p>Count: {count}</p>
+                <button onClick={() => setCount((c) => c + 1)}>+</button>
+                <p>Calculation {calculation}</p>
+            </>
+        )
+
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <Counter />
+    )
+
+    Not: Birden çok bağımlılık varsa, bunlar useEffect bağımlılık dizisine(dependency array) dahil edilmelidir.
+*/
+
+
+
+/*
+    ************ useEffect UYGULAMA 4 ************
+
+    // Effect Cleanup: Efect Temizleme
+
+    --> Bazı efektler, bellek sızıntılarını azaltmak için temizleme gerektirir.
+
+    --> Artık gerekmeyen zaman aşımları, abonelikler, olay dinleyicileri ve diğer efektler atılmalıdır.
+    
+    --> Bunu useEffectHook'un sonuna bir dönüş fonksiyonu ekleyerek yapıyoruz.
+
+    import { useState, useEffect } from 'react';
+    import ReactDOM from 'react-dom/client';
+
+
+    const Timer = () =>  {
+        const [count, setCount] = useState(0);
+
+        useEffect(() => {
+
+            let timer = setTimeout(() => {
+                setCount((count) => count + 1)
+            }, 1000); // Not: Zamanlayıcıyı temizlemek için ona bir isim vermemiz gerekiyordu.
+
+            return () => clearTimeout(timer);
+
+        }, [])
+
+        return <h1>I've rendered {count} times!</h1>
+    }
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'))
+    root.render(
+        <Timer />
+    )
+*/
